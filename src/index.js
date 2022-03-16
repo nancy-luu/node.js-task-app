@@ -8,40 +8,66 @@ const port = process.env.PORT || 3000
 
 app.use(express.json())
 
-app.post('/users', (req, res) => {
+app.post('/users', async (req, res) => {
     const user = new User(req.body)
     
-    user.save().then(() => {
+    try {
+        await user.save()
         res.status(201).send(user)
-    }).catch((error) => {
-        res.status(400).send(error)
-    })
+    } catch (e) {
+        res.status(400).send(e)
+    }
+
+    // user.save().then(() => {
+    //     res.status(201).send(user)
+    // }).catch((error) => {
+    //     res.status(400).send(error)
+    // })
+
 })
 
-app.get('/users', (req, res) => {
-    // empty object => all users in database
-    User.find({}).then((users) => {
+app.get('/users', async (req, res) => {
+
+    try {
+        const users = await User.find({})
         res.status(200).send(users)
-    }).catch((error) => {
-        res.status(500).send(error)
-    })
+    } catch (e){
+        res.status(500).send()
+    }
+
+    // empty object => all users in database
+    // User.find({}).then((users) => {
+    //     res.status(200).send(users)
+    // }).catch((error) => {
+    //     res.status(500).send(error)
+    // })
 })
 
-app.get('/users/:id', (req, res) => {
+app.get('/users/:id', async (req, res) => {
     const _id = req.params.id
 
-    User.findById(_id).then((user) => {
+    try {
+        const user = await User.findById(_id)
         if (!user) {
-            // console.log('should send 404')
             return res.status(404).send()
         }
-
         res.send(user)
-
-    }).catch((error) => {
-        // console.log('should send 505')
+    } catch (e) {
         res.status(500).send()
-    })
+    }
+
+    // User.findById(_id).then((user) => {
+    //     if (!user) {
+    //         // console.log('should send 404')
+    //         return res.status(404).send()
+    //     }
+
+    //     res.send(user)
+
+    // }).catch((error) => {
+    //     // console.log('should send 505')
+    //     res.status(500).send()
+    // })
 })
 
 app.post('/tasks', (req, res) => {
