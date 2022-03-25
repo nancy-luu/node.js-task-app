@@ -87,7 +87,7 @@ app.post('/tasks', async (req, res) => {
     // })
 })
 
-app.get('/tasks', (req, res) => {
+app.get('/tasks', async (req, res) => {
 
     try {
         const tasks = await Task.find({})
@@ -104,7 +104,7 @@ app.get('/tasks', (req, res) => {
 
 })
 
-app.get('/tasks/:id', (req, res) => {
+app.get('/tasks/:id', async (req, res) => {
     const _id = req.params.id
 
     try {
@@ -113,7 +113,7 @@ app.get('/tasks/:id', (req, res) => {
         if (!task) {
             return res.status(404).send()
         } 
-        
+
         res.send(task)
 
     } catch (e) {
@@ -129,7 +129,7 @@ app.get('/tasks/:id', (req, res) => {
     // }).catch((error) => {
     //     res.status(500).send()
     // })
-})
+}) 
 
 app.listen(port, () => {
     console.log('Server is up on port' + port)
