@@ -3,7 +3,6 @@ const chalk = require('chalk');
 
 const errorHighLight = chalk.bold.red.inverse
 
-
 const Task = mongoose.model('Task', {
     description: {
         type: String,
