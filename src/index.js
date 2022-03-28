@@ -17,13 +17,6 @@ app.post('/users', async (req, res) => {
     } catch (e) {
         res.status(400).send(e)
     }
-
-    // user.save().then(() => {
-    //     res.status(201).send(user)
-    // }).catch((error) => {
-    //     res.status(400).send(error)
-    // })
-
 })
 
 app.get('/users', async (req, res) => {
@@ -34,13 +27,6 @@ app.get('/users', async (req, res) => {
     } catch (e){
         res.status(500).send()
     }
-
-    // empty object => all users in database
-    // User.find({}).then((users) => {
-    //     res.status(200).send(users)
-    // }).catch((error) => {
-    //     res.status(500).send(error)
-    // })
 })
 
 app.get('/users/:id', async (req, res) => {
@@ -55,19 +41,6 @@ app.get('/users/:id', async (req, res) => {
     } catch (e) {
         res.status(500).send()
     }
-
-    // User.findById(_id).then((user) => {
-    //     if (!user) {
-    //         // console.log('should send 404')
-    //         return res.status(404).send()
-    //     }
-
-    //     res.send(user)
-
-    // }).catch((error) => {
-    //     // console.log('should send 505')
-    //     res.status(500).send()
-    // })
 })
 
 app.post('/tasks', async (req, res) => {
@@ -79,29 +52,17 @@ app.post('/tasks', async (req, res) => {
     } catch (e) {
         res.status(400).send(e)
     }
- 
-    // task.save().then(() =>{
-    //     res.status(201).send(task)
-    // }).catch((error) => {
-    //     res.status(400).send(error)
-    // })
 }) 
 
 app.get('/tasks', async (req, res) => {
 
+    // find({}) for all tasks
     try {
         const tasks = await Task.find({})
         res.send(tasks)
     } catch (e) {
         res.status(500).send()
     }
-
-    // Task.find({}).then((tasks) => {
-    //     res.status(200).send(tasks)
-    // }).catch((erorr) => {
-    //     res.status(500).send()
-    // })
-
 })
 
 app.get('/tasks/:id', async (req, res) => {
@@ -119,16 +80,6 @@ app.get('/tasks/:id', async (req, res) => {
     } catch (e) {
         res.status(500).send()
     }
-
-    // Task.findById(_id).then((task) => {
-    //     if (!task) {
-    //         res.status(4004).send()
-    //     }
-    //     res.send(task)
-
-    // }).catch((error) => {
-    //     res.status(500).send()
-    // })
 }) 
 
 app.listen(port, () => {
