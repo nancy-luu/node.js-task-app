@@ -44,8 +44,35 @@ app.get('/users/:id', async (req, res) => {
     }
 })
 
+app.patch('/users/:id', async (req, res) => {
+    const _id = req.params.id
+    // .keys will return an array of strings where each is a property on that object
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ['name', 'email', 'password', 'age']
+    const isValidOperation = updates.every((update) =>  allowedUpdates.includes(update))
+
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid updaates!' })
+    }
+
+    try {
+        // new: true returns the new user as opposed to the existing one before the update (gives us latest data)
+        const user = await User.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true})
+        
+        if (!user) {
+            return res.status(404).send()
+        }
+
+        res.send(user)
+
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
 app.post('/tasks', async (req, res) => {
     const task = new Task(req.body)
+                                             
     try {
         const createUser = await task.save()
         res.status(201).send(createUser)
@@ -66,6 +93,7 @@ app.get('/tasks', async (req, res) => {
 })
 
 app.get('/tasks/:id', async (req, res) => {
+    // url parameter
     const _id = req.params.id
 
     try {
