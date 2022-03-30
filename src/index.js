@@ -17,6 +17,7 @@ app.post('/users', async (req, res) => {
     } catch (e) {
         res.status(400).send(e)
     }
+
 })
 
 app.get('/users', async (req, res) => {
@@ -47,8 +48,7 @@ app.post('/tasks', async (req, res) => {
     const task = new Task(req.body)
     try {
         const createUser = await task.save()
-        return 
-
+        res.status(201).send(createUser)
     } catch (e) {
         res.status(400).send(e)
     }
