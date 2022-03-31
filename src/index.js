@@ -52,7 +52,7 @@ app.patch('/users/:id', async (req, res) => {
     const isValidOperation = updates.every((update) =>  allowedUpdates.includes(update))
 
     if (!isValidOperation) {
-        return res.status(400).send({ error: 'Invalid updaates!' })
+        return res.status(400).send({ error: 'Invalid updates!' })
     }
 
     try {
@@ -109,6 +109,34 @@ app.get('/tasks/:id', async (req, res) => {
         res.status(500).send()
     }
 }) 
+
+app.patch('/tasks/:id', async (req, res) => {
+    const _id = req.params.id
+    const appliedUpdates = req.body
+
+    // validates updates being performed:
+    const updates = Object.keys(appliedUpdates)
+    const allowedUpdates = [ 'description' , 'completed' ]
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+
+    // is validations do not pass then code stops at error
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid updates!' })
+    }
+
+    try {
+        const user = await Task.findByIdAndUpdate(_id, appliedUpdates, { new: true, runValidators: true })
+
+        if(!user) {
+            return res.status(404).send()
+        }
+
+        res.send(user)
+
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
 
 app.listen(port, () => {
     console.log('Server is up on port' + port)
