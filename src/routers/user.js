@@ -4,11 +4,6 @@ const User = require('../models/user')
 const router = new express.Router()
 
 
-// set up the routes and function
-// router.get('/test', (req, res) => {
-//     res.send('From a new file')
-// })
-
 router.post('/users', async (req, res) => {
     const user = new User(req.body)
     
