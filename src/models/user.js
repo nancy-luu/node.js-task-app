@@ -4,8 +4,7 @@ const chalk = require('chalk')
 
 const errorHighLight = chalk.bold.red.inverse
 
-// defining model
-const User = mongoose.model('User', {
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -43,5 +42,17 @@ const User = mongoose.model('User', {
         }
     }
 })
+
+// middleware
+userSchema.pre('save', async function (next) {
+    const user = this
+
+    console.log('just before saving!')
+    
+    next()
+})
+
+// defining model
+const User = mongoose.model('User', userSchema)
 
 module.exports = User
