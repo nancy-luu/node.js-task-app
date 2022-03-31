@@ -8,6 +8,16 @@ const port = process.env.PORT || 3000
 
 app.use(express.json())
 
+// create a new router
+const router = new express.Router()
+// set up the routes and function
+router.get('/test', (req, res) => {
+    res.send('This is from my other router')
+})
+// register the route with the express application
+app.use(router)
+
+
 app.post('/users', async (req, res) => {
     const user = new User(req.body)
     
@@ -159,6 +169,7 @@ app.delete('/tasks/:id', async (req, res) => {
 
     try {
         const task = await Task.findByIdAndDelete(_id)
+
         if (!task) {
             res.status(400).send()
         }
