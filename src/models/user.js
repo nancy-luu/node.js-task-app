@@ -44,7 +44,25 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-// middleware allows us to enforce the hashing of passwords
+
+userSchema.statics.findByCredentials = async (email, password) => {
+    const user = await User.findOne({ email: email })
+
+    if (!user) {
+        throw new Error(errorHighLight('Unable to login!'))
+    }
+
+    const isMatch = await bcrypt.compare(password, user.passwords.password)
+
+    if (!isMatch) {
+        throw new Error(errorHighLight('Unable to login!'))
+    }
+
+    return user 
+}
+
+
+// hash plaintext password before saving
 // provide once and works everywhere
 userSchema.pre('save', async function (next) {
     const user = this
