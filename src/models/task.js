@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const chalk = require('chalk');
+const bcrypt = require('bcryptjs');
 
 const errorHighLight = chalk.bold.red.inverse
 
