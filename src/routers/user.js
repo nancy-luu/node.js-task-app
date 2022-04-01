@@ -52,8 +52,17 @@ router.patch('/users/:id', async (req, res) => {
     }
 
     try {
+        const user = await User.findById(_id)
+
+        // make sure our middleware runs correctly
+        updates.forEach((update) => {
+            // bracket notation to access property dynamically instead of dot notation
+            user[update] = req.body[update]
+        })
+        await user.save()
+
         // new: true returns the new user as opposed to the existing one before the update (gives us latest data)
-        const user = await User.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true})
+        // const user = await User.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true})
         
         if (!user) {
             return res.status(404).send()
