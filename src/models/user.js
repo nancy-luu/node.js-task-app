@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const chalk = require('chalk')
+const bcrypt = require('bcryptjs')
 
 const errorHighLight = chalk.bold.red.inverse
 
@@ -43,11 +44,14 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-// middleware
+// middleware allows us to enforce the hashing of passwords
+// provide once and works everywhere
 userSchema.pre('save', async function (next) {
     const user = this
 
-    console.log('just before saving!')
+    if (user.isModified('password'))  {
+        user.password = await bcrypt.hash(user.password, 8)
+    }
     
     next()
 })
