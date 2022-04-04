@@ -4,6 +4,9 @@ const express = require('express')
 require('./db/mongoose')
 const userRouter = require('./routers/user')
 const taskRouter = require('./routers/task')
+const chalk = require('chalk')
+const noteHighlight = chalk.bold.green.inverse
+
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -41,11 +44,16 @@ const jwt = require('jsonwebtoken');
 
 const myFunction = async () => {
     // second argument is a secret (random series of characters) / signs token
-    const token = jwt.sign({ _id: 'abc123' }, 'thisismynewcourse')
+    // third argument is an object with options
+    const token = jwt.sign({ _id: 'abc123' }, 'thisismynewcourse', { expiresIn :  '7 days'})
     
-    console.log('should have printed token:')
+    console.log(noteHighlight('Token:'))
     console.log(token)
 
+    // secret needs to be the same to authenticate user
+    console.log(noteHighlight('Verified Data:'))
+    const data = jwt.verify(token, 'thisismynewcourse')
+    console.log(data)
 }
 
 myFunction()
