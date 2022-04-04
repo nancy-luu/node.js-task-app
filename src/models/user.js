@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
+        dropDups: true,
         require: true,
         trim: true,
         lowercase: true,
@@ -77,5 +78,6 @@ userSchema.pre('save', async function (next) {
 
 // defining model
 const User = mongoose.model('User', userSchema)
+
 
 module.exports = User

@@ -3,7 +3,9 @@ const mongoose = require('mongoose')
 mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
     useNewUrlParser: true, 
     useCreateIndex: true,
-    useFindAndModify: false
+    useFindAndModify: false,
+    useCreateIndex: true, // in place for unique email bug
+    autoIndex: true, // in place for unique email bug
 })
 
 
