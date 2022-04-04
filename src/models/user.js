@@ -51,15 +51,15 @@ userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
 
     // needed to remove below in order to login with postman
-    // if (!user) {
-    //     throw new Error(errorHighLight('Unable to login!'))
-    // }
+    if (!user) {
+        throw new Error(errorHighLight('Unable to login!'))
+    }
 
-    // const isMatch = await bcrypt.compare(password, user.passwords.password)
+    const isMatch = await bcrypt.compare(password, user.password)
 
-    // if (!isMatch) {
-    //     throw new Error(errorHighLight('Unable to login!'))
-    // }
+    if (!isMatch) {
+        throw new Error(errorHighLight('Unable to login!'))
+    }
 
     return user 
 }
