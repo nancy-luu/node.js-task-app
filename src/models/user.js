@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const chalk = require('chalk')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const errorHighLight = chalk.bold.red.inverse
 
@@ -46,6 +47,13 @@ const userSchema = new mongoose.Schema({
     }
 })
 
+// custom methods on instance of User
+userSchema.methods.generateAuthToken = async function () {
+    const user = this
+    const token = jwt.sign({ _id: user._id.toString() }, 'thisismynewcourse')
+
+    return token
+}
 
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
