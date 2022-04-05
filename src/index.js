@@ -11,14 +11,20 @@ const noteHighlight = chalk.bold.green.inverse
 const app = express()
 const port = process.env.PORT || 3000
 
+// app.use((req, res, next) => {
+//     // console.log(noteHighlight(req.method, req.path))
+//     if (req.method === 'GET') {
+//         res.send('GET requests are disabled')
+//     } else {
+//         // ensures all other route handlers to run
+//         next()
+//     }
+// })
+
 app.use((req, res, next) => {
-    // console.log(noteHighlight(req.method, req.path))
-    if (req.method === 'GET') {
-        res.send('GET requests are disabled')
-    } else {
-        // ensures all other route handlers to run
-        next()
-    }
+    if (req.method) {
+        res.status(503).send('The site is under maintenance. Please come back soon.')
+    } 
 })
 
 app.use(express.json())
