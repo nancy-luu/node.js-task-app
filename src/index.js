@@ -11,6 +11,16 @@ const noteHighlight = chalk.bold.green.inverse
 const app = express()
 const port = process.env.PORT || 3000
 
+app.use((req, res, next) => {
+    // console.log(noteHighlight(req.method, req.path))
+    if (req.method === 'GET') {
+        res.send('GET requests are disabled')
+    } else {
+        // ensures all other route handlers to run
+        next()
+    }
+})
+
 app.use(express.json())
 // register the route with the express application
 app.use(userRouter)
@@ -19,6 +29,12 @@ app.use(taskRouter)
 app.listen(port, () => {
     console.log('Server is up on port' + port)
 })
+
+// 
+// Without middleware: new request -> run route handler
+// 
+// With middleware: new request -> do something (a function that runs) -> run route handler
+// 
 
 // Original login 
 // const bcrypt = require('bcryptjs')
