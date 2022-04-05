@@ -21,11 +21,12 @@ const port = process.env.PORT || 3000
 //     }
 // })
 
-app.use((req, res, next) => {
-    if (req.method) {
-        res.status(503).send('The site is under maintenance. Please come back soon.')
-    } 
-})
+//  MAINTENANCE MIDDLEWARE  
+// app.use((req, res, next) => {
+//     if (req.method) {
+//         res.status(503).send('The site is under maintenance. Please come back soon.')
+//     } 
+// })
 
 app.use(express.json())
 // register the route with the express application
