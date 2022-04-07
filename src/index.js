@@ -108,7 +108,7 @@ const main = async () => {
 
     const user = await User.findById('624f2c479e1789eb60888b28')
     // populate the virtual field in user model
-    await user.populate('tasks').execpopulate()
+    await user.populate('tasks').execPopulate()
     console.log(user.tasks)
 }
 
