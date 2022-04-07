@@ -93,3 +93,17 @@ app.listen(port, () => {
 // }
 
 // console.log(JSON.stringify(pet))
+
+
+// Task router examples
+const Task = require('./models/task')
+
+const main = async () => {
+    const task = await Task.findById('624f2ebab1c04ff1b0e485ef')
+    // populate allows us to populate data from a relationship 
+    // bring it from being just the ID to show the entire profile
+    await task.populate('owner').execPopulate()
+    console.log(noteHighlight(task.owner.name))
+}
+
+main()
