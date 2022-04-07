@@ -64,7 +64,8 @@ userSchema.methods.generateAuthToken = async function () {
     return token
 }
 
-userSchema.methods.getPublicProfile = function () {
+// toJSON send back a manipulated object 
+userSchema.methods.toJSON = function () {
     const user = this
 
     // we want back an object with just our user data

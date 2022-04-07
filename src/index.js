@@ -62,21 +62,34 @@ app.listen(port, () => {
 // }
 
 // JWT Login
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 
 
-const myFunction = async () => {
-    // second argument is a secret (random series of characters) / signs token
-    // third argument is an object with options
-    const token = jwt.sign({ _id: 'abc123' }, 'thisismynewcourse', { expiresIn :  '7 days'})
+// const myFunction = async () => {
+//     // second argument is a secret (random series of characters) / signs token
+//     // third argument is an object with options
+//     const token = jwt.sign({ _id: 'abc123' }, 'thisismynewcourse', { expiresIn :  '7 days'})
     
-    console.log(noteHighlight('Token:'))
-    console.log(token)
+//     console.log(noteHighlight('Token:'))
+//     console.log(token)
 
-    // secret needs to be the same to authenticate user
-    console.log(noteHighlight('Verified Data:'))
-    const data = jwt.verify(token, 'thisismynewcourse')
-    console.log(data)
-}
+//     // secret needs to be the same to authenticate user
+//     console.log(noteHighlight('Verified Data:'))
+//     const data = jwt.verify(token, 'thisismynewcourse')
+//     console.log(data)
+// }
 
-myFunction()
+// myFunction()
+
+
+// toJSON example
+// const pet = {
+//     name: 'Hal'
+// }
+
+// pet.toJSON = function () {
+//     // console.log(this)
+//     return {}
+// }
+
+// console.log(JSON.stringify(pet))
