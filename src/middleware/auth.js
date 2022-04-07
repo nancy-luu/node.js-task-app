@@ -13,6 +13,8 @@ const auth = async (req, res, next) => {
             throw new Error()
         }
 
+        // route handlers will be able to access token variable from above
+        req.token = token
         // route handlers will be able to access user variable from above
         req.user = user
         next()

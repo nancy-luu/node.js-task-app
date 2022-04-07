@@ -28,6 +28,22 @@ router.post('/users/login', async (req, res) => {
     }
 })
 
+router.post('/users/logout', auth, async (req, res) => {
+    try {
+        req.user.tokens = req.user.tokens.filter((token) => {
+            // if the tokens are not equal -> we will return true and keep it in the tokens array
+            // if they are equal -> we will return false and filter it out to remove it 
+            return token.token !== req.token
+        }) 
+        await req.user.save()
+
+        res.send()
+        
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
 router.get('/users/me', auth, async (req, res) => {
     res.send(req.user)
 })
