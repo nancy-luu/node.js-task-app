@@ -64,6 +64,20 @@ userSchema.methods.generateAuthToken = async function () {
     return token
 }
 
+userSchema.methods.getPublicProfile = function () {
+    const user = this
+
+    // we want back an object with just our user data
+    const userObject = user.toObject()
+
+    // remove the following from the object as a response
+    delete userObject.password
+    delete userObject.tokens
+
+    return userObject
+}
+
+// statics function on entire Model of User
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
 
