@@ -38,7 +38,21 @@ router.post('/users/logout', auth, async (req, res) => {
         await req.user.save()
 
         res.send()
-        
+
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
+// delete all sessions of logged in account
+router.post('/users/logoutAll', auth, async (req, res) => {
+    try {
+        // wiping out all tokens in the tokens array of the user object
+        req.user.tokens = []
+        await req.user.save()
+
+        res.send()
+
     } catch (e) {
         res.status(500).send()
     }
