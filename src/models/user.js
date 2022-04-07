@@ -53,6 +53,16 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
+// virtual property
+// not stored in the database - just for mongoose to be able to figure out who owns what and how theyre related
+userSchema.virtual('tasks', { 
+    ref: 'Task',
+    // relationship of task belonging to a certain user property
+    localField: '_id',
+    // relationship declared on task
+    foreignField: 'owner'
+})
+
 // custom methods on instance of User
 userSchema.methods.generateAuthToken = async function () {
     const user = this
