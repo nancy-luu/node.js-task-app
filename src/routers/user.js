@@ -43,7 +43,7 @@ router.post('/users/logout', auth, async (req, res) => {
         res.status(500).send()
     }
 })
-
+   
 // delete all sessions of logged in account
 router.post('/users/logoutAll', auth, async (req, res) => {
     try {
