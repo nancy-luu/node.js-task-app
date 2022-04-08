@@ -59,12 +59,16 @@ router.get('/tasks/:id', auth, async (req, res) => {
 
 router.patch('/tasks/:id', auth, async (req, res) => {
     const _id = req.params.id
+    // to fix "must be a single String of 12 bytes or a string of 24 hex characters" error
+    const _ids = _id.slice(0,24)
     const appliedUpdates = req.body
 
     // validates updates being performed:
     const updates = Object.keys(appliedUpdates)
     const allowedUpdates = [ 'description' , 'completed' ]
-    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+    const isValidOperation = updates.every((update) => {
+        return allowedUpdates.includes(update)
+    })
 
     // is validations do not pass then code stops at error
     if (!isValidOperation) {
@@ -74,7 +78,7 @@ router.patch('/tasks/:id', auth, async (req, res) => {
     try {
         // const task = await Task.findById(_id)
         // const user = await Task.findByIdAndUpdate(_id, appliedUpdates, { new: true, runValidators: true })
-        const task = await Task.findOne({ _id, owner: req.user._id })
+        const task = await Task.findOne({ _id: _ids, owner: req.user._id })
         
         if(!task) {
             return res.status(404).send()
@@ -87,6 +91,7 @@ router.patch('/tasks/:id', auth, async (req, res) => {
         res.send(task)
 
     } catch (e) {
+        console.log(e)
         res.status(400).send(e)
     }
 })
