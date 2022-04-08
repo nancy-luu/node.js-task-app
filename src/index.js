@@ -96,20 +96,20 @@ app.listen(port, () => {
 
 
 // Task router examples
-const Task = require('./models/task')
-const User = require('./models/user')
+// const Task = require('./models/task')
+// const User = require('./models/user')
 
-const main = async () => {
-    // const task = await Task.findById('624f2ebab1c04ff1b0e485ef')
-    // // populate allows us to populate data from a relationship 
-    // // bring it from being just the ID to show the entire profile
-    // await task.populate('owner').execPopulate()
-    // console.log(noteHighlight(task.owner.name))
+// const main = async () => {
+//     // const task = await Task.findById('624f2ebab1c04ff1b0e485ef')
+//     // // populate allows us to populate data from a relationship 
+//     // // bring it from being just the ID to show the entire profile
+//     // await task.populate('owner').execPopulate()
+//     // console.log(noteHighlight(task.owner.name))
 
-    const user = await User.findById('624f2c479e1789eb60888b28')
-    // populate the virtual field in user model
-    await user.populate('tasks').execPopulate()
-    console.log(user.tasks)
-}
+//     const user = await User.findById('624f2c479e1789eb60888b28')
+//     // populate the virtual field in user model
+//     await user.populate('tasks').execPopulate()
+//     console.log(user.tasks)
+// }
 
-main()
+// main()
