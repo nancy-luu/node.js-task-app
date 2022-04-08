@@ -23,7 +23,6 @@ router.post('/tasks', auth, async (req, res) => {
 })
 
 router.get('/tasks', auth, async (req, res) => {
-
     // find({}) for all tasks
 
     try {
