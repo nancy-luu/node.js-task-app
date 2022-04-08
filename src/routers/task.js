@@ -25,6 +25,7 @@ router.post('/tasks', auth, async (req, res) => {
 router.get('/tasks', auth, async (req, res) => {
 
     // find({}) for all tasks
+
     try {
         // alternative:
         // await req.user.populate('tasks').execPopulate()
@@ -56,7 +57,7 @@ router.get('/tasks/:id', auth, async (req, res) => {
 }) 
 
 
-router.patch('/tasks/:id', async (req, res) => {
+router.patch('/tasks/:id', auth, async (req, res) => {
     const _id = req.params.id
     const appliedUpdates = req.body
 
@@ -71,17 +72,17 @@ router.patch('/tasks/:id', async (req, res) => {
     }
 
     try {
-        const task = await Task.findById(_id)
+        // const task = await Task.findById(_id)
         // const user = await Task.findByIdAndUpdate(_id, appliedUpdates, { new: true, runValidators: true })
-
-        updates.forEach((update) => {
-            task[update] = req.body[update]
-        })
-        await task.save()
-
+        const task = await Task.findOne({ _id, owner: req.user._id })
+        
         if(!task) {
             return res.status(404).send()
         }
+
+        updates.forEach((update) => task[update] = req.body[update])
+
+        await task.save()
 
         res.send(task)
 
