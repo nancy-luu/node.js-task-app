@@ -100,6 +100,7 @@ router.delete('/tasks/:id', auth, async (req, res) => {
     const _id = req.params.id
 
     try {
+        // findById only takes into account the Id of the task. We also need to filter with owner.
         // const task = await Task.findByIdAndDelete(_id)
         const task = await Task.findOneAndDelete({ _id: _id, owner: req.user._id})
 
