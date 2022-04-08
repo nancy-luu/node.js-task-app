@@ -20,7 +20,7 @@ router.post('/tasks', auth, async (req, res) => {
     } catch (e) {
         res.status(400).send(e)
     }
-}) 
+})
 
 router.get('/tasks', async (req, res) => {
 
@@ -50,6 +50,7 @@ router.get('/tasks/:id', async (req, res) => {
         res.status(500).send()
     }
 }) 
+
 
 router.patch('/tasks/:id', async (req, res) => {
     const _id = req.params.id
