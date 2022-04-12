@@ -22,14 +22,15 @@ router.post('/tasks', auth, async (req, res) => {
     }
 })
 
+// GET /tasks - both incomplete andd complete 
 router.get('/tasks', auth, async (req, res) => {
     // find({}) for all tasks
 
     try {
         // alternative:
+        // const tasks = await Task.find({ owner: req.user._id })
         // await req.user.populate('tasks').execPopulate()
-        // res.send(req.user.tasks)
-        const tasks = await Task.find({ owner: req.user._id })
+        res.send(req.user.tasks)
         res.send(tasks)
     } catch (e) {
         res.status(500).send()
