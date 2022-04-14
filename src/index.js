@@ -28,6 +28,24 @@ const port = process.env.PORT || 3000
 //     } 
 // })
 
+// FILE UPLOAD WITH EXPRESS
+const multer = require('multer')
+const upload = multer({
+    dest: 'images'
+})
+app.post('/upload', upload.single('upload'), (req, res) => {
+    res.send()
+})
+
+
+
+
+
+
+
+
+
+
 app.use(express.json())
 // register the route with the express application
 app.use(userRouter)
@@ -113,3 +131,4 @@ app.listen(port, () => {
 // }
  
 // main()
+
