@@ -23,15 +23,25 @@ router.post('/tasks', auth, async (req, res) => {
 })
 
 // GET /tasks - both incomplete andd complete 
+// GET /tasks?completed=true
 router.get('/tasks', auth, async (req, res) => {
     // find({}) for all tasks
+    const match = {}
+
+    if (req.query.completed) {
+        match.completed = req.query.completed === 'true'
+    }
 
     try {
         // alternative:
         // const tasks = await Task.find({ owner: req.user._id })
-        // await req.user.populate('tasks').execPopulate()
+        // res.send(tasks)
+        // customize and object based on the query strings
+        await req.user.populate({
+            path: 'tasks',
+            match
+        }).execPopulate()
         res.send(req.user.tasks)
-        res.send(tasks)
     } catch (e) {
         res.status(500).send()
     }
