@@ -2,6 +2,9 @@ const express = require('express');
 const Task = require('../models/task')
 const auth = require('../middleware/auth')
 const router = new express.Router()
+const chalk = require('chalk')
+
+const highlight = chalk.bold.cyan.inverse
 
 
 router.post('/tasks', auth, async (req, res) => {
@@ -30,10 +33,18 @@ router.post('/tasks', auth, async (req, res) => {
 // GET /tasks?sortBy=createdAt_asc
 router.get('/tasks', auth, async (req, res) => {
     // find({}) for all tasks
-    const match = {}
 
+    const match = {}
+    const sort = {}
+    
     if (req.query.completed) {
         match.completed = req.query.completed === 'true'
+    }
+    
+    if (req.query.sortBy) {
+        const parts = req.query.sortBy.split('_')
+        console.log(highlight(parts))
+        sort[parts[0]] = parts[1] === 'desc' ? -1 : 1
     }
 
     try {
@@ -48,9 +59,7 @@ router.get('/tasks', auth, async (req, res) => {
             options: {
                 limit: parseInt(req.query.limit),
                 skip: parseInt(req.query.skip),
-                sort: {
-                    completed: -1
-                }
+                sort
             }
         }).execPopulate()
         res.send(req.user.tasks)
