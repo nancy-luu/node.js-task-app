@@ -147,10 +147,10 @@ router.delete('/users/me', auth, async (req, res) => {
     }
 })
 
+//  UPLOAD AVATAR FILE
 const avatar = multer({
     dest: 'avatar'
 })
-
 router.post('/users/me/avatar', avatar.single('avatar'), async (req, res) => {
     res.send()
 })
