@@ -27,6 +27,7 @@ router.post('/tasks', auth, async (req, res) => {
 // GET /tasks?limit=10&skip=0 
 // limit - allows us to limit the results to a certain number 
 // skip - iterate over pages. If skip 10 then get 10 you get the second set of 10
+// GET /tasks?sortBy=createdAt_asc
 router.get('/tasks', auth, async (req, res) => {
     // find({}) for all tasks
     const match = {}
@@ -39,13 +40,17 @@ router.get('/tasks', auth, async (req, res) => {
         // alternative:
         // const tasks = await Task.find({ owner: req.user._id })
         // res.send(tasks)
+
         // customize and object based on the query strings
         await req.user.populate({
             path: 'tasks',
             match,
             options: {
                 limit: parseInt(req.query.limit),
-                skip: parseInt(req.query.skip)
+                skip: parseInt(req.query.skip),
+                sort: {
+                    createdAt: -1
+                }
             }
         }).execPopulate()
         res.send(req.user.tasks)
