@@ -24,6 +24,9 @@ router.post('/tasks', auth, async (req, res) => {
 
 // GET /tasks - both incomplete andd complete 
 // GET /tasks?completed=true
+// GET /tasks?limit=10&skip=0 
+// limit - allows us to limit the results to a certain number 
+// skip - iterate over pages. If skip 10 then get 10 you get the second set of 10
 router.get('/tasks', auth, async (req, res) => {
     // find({}) for all tasks
     const match = {}
@@ -39,7 +42,10 @@ router.get('/tasks', auth, async (req, res) => {
         // customize and object based on the query strings
         await req.user.populate({
             path: 'tasks',
-            match
+            match,
+            options: {
+                limit: parseInt(req.query.limit)
+            }
         }).execPopulate()
         res.send(req.user.tasks)
     } catch (e) {
