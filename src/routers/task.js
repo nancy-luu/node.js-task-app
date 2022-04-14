@@ -49,7 +49,7 @@ router.get('/tasks', auth, async (req, res) => {
                 limit: parseInt(req.query.limit),
                 skip: parseInt(req.query.skip),
                 sort: {
-                    createdAt: -1
+                    createdAt: 1
                 }
             }
         }).execPopulate()
