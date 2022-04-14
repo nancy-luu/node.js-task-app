@@ -35,6 +35,17 @@ const upload = multer({
     limits: { 
         // file size in megabytes
         fileSize: 1000000
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.endsWith('.pdf')) {
+            return cb(new Error('Please upload a PDF'))
+        }
+
+        cb(undefined, true)
+
+        // cb(new Err('File must be a PDF'))
+        // cb(undefined, true)
+        // cb(undefined, false)
     }
 })
 app.post('/upload', upload.single('upload'), (req, res) => {
