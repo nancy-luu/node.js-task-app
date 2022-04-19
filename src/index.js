@@ -42,7 +42,7 @@ const upload = multer({
         // }
 
         if(!file.originalname.match(/\.(doc|docx)$/)) {
-            return cb(new Error('Please upload a PDF'))
+            return cb(new Error('Please upload a word document'))
         }
 
         cb(undefined, true)
