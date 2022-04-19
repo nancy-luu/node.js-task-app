@@ -156,7 +156,7 @@ const avatar = multer({
     // cb = callback
     fileFilter(req, file, cb) {
         if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-            return cb(new Error('Please upload a jpg, jpeg. or png file.'))
+            return cb(new Error('Please upload a jpg, jpeg, or png file.'))
         } 
 
         cb(undefined, true)
