@@ -175,7 +175,7 @@ router.post('/users/me/avatar', auth, avatar.single('avatar'), async (req, res) 
 router.delete('/users/me/avatar', auth, avatar.single('avatar'), async (req, res) => {
     req.user.avatar = undefined
     await req.user.save()
-    res.status(200).send()
+    res.send()
 })
 
 // export the route from the express module
