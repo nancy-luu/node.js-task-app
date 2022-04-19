@@ -149,7 +149,6 @@ router.delete('/users/me', auth, async (req, res) => {
 
 //  UPLOAD AVATAR FILE
 const avatar = multer({
-    dest: 'avatar', 
     limits: { 
         fileSize: 1000000
     },
@@ -164,6 +163,9 @@ const avatar = multer({
 
 })
 router.post('/users/me/avatar', auth, avatar.single('avatar'), async (req, res) => {
+    // can only access req.file.buffer when 'dest' is removed from multer
+    req.user.avatar = req.file.buffer
+    await req.user.save()
     res.send()
 }, (error, req, res, next) => {
     res.status(400).send({ error: error.message })
