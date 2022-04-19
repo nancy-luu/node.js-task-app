@@ -52,9 +52,15 @@ const upload = multer({
         // cb(undefined, false)
     }
 })
+
 app.post('/upload', upload.single('upload'), (req, res) => {
     res.send()
+}, (error, req, res, next) => {
+    // this function needs to be set up with this structure (error, req, res, next) for express to know that this is the function set up to handle any uncaught errors
+    // provides a simple error message rather than html in postman
+    res.status(400).send({ error: error.message })
 })
+
 
 
 
