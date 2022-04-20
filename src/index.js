@@ -29,42 +29,37 @@ const port = process.env.PORT || 3000
 // })
 
 // FILE UPLOAD WITH EXPRESS
-const multer = require('multer')
-const upload = multer({
-    dest: 'images',
-    limits: { 
-        // file size in megabytes
-        fileSize: 1000000
-    },
-    fileFilter(req, file, cb) {
-        // if (!file.originalname.endsWith('.pdf')) {
-        //     return cb(new Error('Please upload a PDF'))
-        // }
+// const multer = require('multer')
+// const upload = multer({
+//     dest: 'images',
+//     limits: { 
+//         // file size in megabytes
+//         fileSize: 1000000
+//     },
+//     fileFilter(req, file, cb) {
+//         // if (!file.originalname.endsWith('.pdf')) {
+//         //     return cb(new Error('Please upload a PDF'))
+//         // }
 
-        if(!file.originalname.match(/\.(doc|docx)$/)) {
-            return cb(new Error('Please upload a word document'))
-        }
+//         if(!file.originalname.match(/\.(doc|docx)$/)) {
+//             return cb(new Error('Please upload a word document'))
+//         }
 
-        cb(undefined, true)
+//         cb(undefined, true)
 
-        // cb(new Err('File must be a PDF'))
-        // cb(undefined, true)
-        // cb(undefined, false)
-    }
-})
+//         // cb(new Err('File must be a PDF'))
+//         // cb(undefined, true)
+//         // cb(undefined, false)
+//     }
+// })
 
-app.post('/upload', upload.single('upload'), (req, res) => {
-    res.send()
-}, (error, req, res, next) => {
-    // this function needs to be set up with this structure (error, req, res, next) for express to know that this is the function set up to handle any uncaught errors
-    // provides a simple error message rather than html in postman
-    res.status(400).send({ error: error.message })
-})
-
-
-
-
-
+// app.post('/upload', upload.single('upload'), (req, res) => {
+//     res.send()
+// }, (error, req, res, next) => {
+//     // this function needs to be set up with this structure (error, req, res, next) for express to know that this is the function set up to handle any uncaught errors
+//     // provides a simple error message rather than html in postman
+//     res.status(400).send({ error: error.message })
+// })
 
 
 
