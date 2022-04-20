@@ -8,6 +8,9 @@ const multer = require('multer')
 // convert large images in common formats to smaller, web-friendly JPEG, PNG, WebP, GIF and AVIF images of varying dimensions
 const sharp = require('sharp')
 
+// importing send grid function to send email
+const { sendWelcomeEmail } = require('../emails/account')
+
 
 
 router.post('/users', async (req, res) => {
@@ -15,6 +18,7 @@ router.post('/users', async (req, res) => {
     
     try {
         await user.save()
+        sendWelcomeEmail(user.email, user.name)
         const token = await user.generateAuthToken()
         res.status(201).send({ user, token })
     } catch (e) {
