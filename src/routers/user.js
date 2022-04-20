@@ -3,8 +3,10 @@ const User = require('../models/user')
 const auth = require('../middleware/auth')
 // create a new router
 const router = new express.Router()
-
 const multer = require('multer')
+
+// convert large images in common formats to smaller, web-friendly JPEG, PNG, WebP, GIF and AVIF images of varying dimensions
+const sharp = require('sharp')
 
 
 
@@ -163,8 +165,20 @@ const avatar = multer({
 
 })
 router.post('/users/me/avatar', auth, avatar.single('avatar'), async (req, res) => {
+
+    // sharp(req.file.buffer) => sent the data to sharp
+    // once a use uploads a picture it will be reduced to 250x250 and then converted to a png
+    // toBuffer() => asked sharp to send data back
+    const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250}).png().toBuffer()
+
+
     // can only access req.file.buffer when 'dest' is removed from multer
-    req.user.avatar = req.file.buffer
+    // req.user.avatar = req.file.buffer
+
+    // the value for the avatar field will be the file data that sharp provides 
+    // the modified image above
+    req.user.avatar = buffer 
+
     await req.user.save()
     res.send()
 }, (error, req, res, next) => {
@@ -186,7 +200,7 @@ router.get('/users/:id/avatar', async (req, res) => {
             throw new Error ()
         }
 
-        res.set('Content-Type' , 'image/jpg')
+        res.set('Content-Type' , 'image/png')
         res.send(user.avatar)
 
     } catch (e) {
