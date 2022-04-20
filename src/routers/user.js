@@ -10,7 +10,7 @@ const sharp = require('sharp')
 
 // importing send grid function to send email
 const { sendWelcomeEmail } = require('../emails/account')
-
+const { sendGoodbyeEmail } = require('../emails/account')
 
 
 router.post('/users', async (req, res) => {
@@ -137,6 +137,7 @@ router.patch('/users/me', auth, async (req, res) => {
 router.delete('/users/me', auth, async (req, res) => {
     // if we werent using auth as middlewware then we would not  have access to req.user
     const _id = req.user._id
+    const user = req.user
 
     try {
         // const user = await User.findByIdAndDelete(_id)
@@ -146,6 +147,7 @@ router.delete('/users/me', auth, async (req, res) => {
         // }
 
         await req.user.remove()
+        sendGoodbyeEmail(user.email, user.name)
         res.send(req.user)
 
     } catch (e) {
