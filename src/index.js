@@ -7,9 +7,8 @@ const taskRouter = require('./routers/task')
 const chalk = require('chalk')
 const noteHighlight = chalk.bold.green.inverse
 
-
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT
 
 // app.use((req, res, next) => {
 //     // console.log(noteHighlight(req.method, req.path))
@@ -60,9 +59,6 @@ const port = process.env.PORT || 3000
 //     // provides a simple error message rather than html in postman
 //     res.status(400).send({ error: error.message })
 // })
-
-
-
 
 
 app.use(express.json())

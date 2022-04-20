@@ -9,8 +9,7 @@ const multer = require('multer')
 const sharp = require('sharp')
 
 // importing send grid function to send email
-const { sendWelcomeEmail } = require('../emails/account')
-const { sendGoodbyeEmail } = require('../emails/account')
+const { sendWelcomeEmail, sendGoodbyeEmail } = require('../emails/account')
 
 
 router.post('/users', async (req, res) => {

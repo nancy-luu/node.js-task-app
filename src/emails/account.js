@@ -3,9 +3,7 @@ const chalk = require('chalk')
 const messageHighlight = chalk.bold.green.inverse
 
 
-const sendgridAPIkey = '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'
-
-sgMail.setApiKey(sendgridAPIkey)
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 // sgMail.send({
 //     to: 'nancyluu92@gmail.com',
